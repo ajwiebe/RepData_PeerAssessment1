@@ -7,14 +7,14 @@ output:
 
 
 ## Loading and preprocessing the data
-```{r}
+```{r echo = TRUE}
 activity_data <- read.csv("activity.csv")
 ```
 
 
 ## What is mean total number of steps taken per day?
 The following histogram shows the number of steps taken per day of tracking, followed by the mean number of steps taken per day, and lastly the median number of steps taken per day.
-```{r}
+```{r echo=TRUE}
 sums <- tapply(activity_data$steps, activity_data$date, sum)
 hist(sums, main = "Total Number of Steps Taken per Day", xlab = "Number of Steps", ylab = "Frequency of Days")
 Mean <- mean(sums, na.rm = T)
@@ -26,7 +26,7 @@ print(Median)
 
 ## What is the average daily activity pattern?
 The following graph indicates the average number of steps taken over a five minute period over a series of days, followed by the maximum number of steps taken over a five minute interval. 
-```{r}
+```{r echo=TRUE}
 StepIntervals <- aggregate(steps~interval, activity_data, mean, na.rm = T)
 plot(StepIntervals$interval, StepIntervals$steps, type = "l", main = "Average Daily Activity Pattern", xlab = "Five Minute Interval", ylab = "Average Steps Taken")
 MaxSteps <- max(StepIntervals$steps)
@@ -36,7 +36,7 @@ print(MaxSteps)
 
 ## Imputing missing values
 The following histogram indicates the total number of steps taken per day. Any missing data was substituted with the average number of steps taken during the given five munite interval. This is graph is meant to be contrasted with the above graph of the same kind. Following the graph is the new average number of steps taken, and the new median number of steps taken. 
-```{r}
+```{r echo=TRUE}
 print(sum(is.na(activity_data)))
 StepIntervals <- tapply(activity_data$steps, activity_data$interval, mean, na.rm = T)
 splitdatameans <- split(activity_data, activity_data$interval)
@@ -56,7 +56,7 @@ print(NewMedian)
 
 ## Are there differences in activity patterns between weekdays and weekends?
 The following graph contrasts the average number of steps over  given five minute intervals during the week and durng the weekend.  
-```{r}
+```{r echo=TRUE}
 NewData$date <- as.Date(NewData$date)
 NewData$Day <- weekdays(NewData$date, abbreviate = F)
 NewData$DateCategory <- ifelse(NewData$Day %in% c("Saturday", "Sunday"), "Weekend", "Weekday")
